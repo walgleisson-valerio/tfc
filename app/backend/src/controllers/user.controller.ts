@@ -7,4 +7,12 @@ export default class UserController {
 
     res.status(200).json({ token });
   }
+
+  static async getRole(req: Request, res: Response) {
+    const { email } = req.body.user;
+
+    const role = await userService.getRole(email);
+
+    res.status(200).json({ role });
+  }
 }

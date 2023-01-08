@@ -32,7 +32,7 @@ class App {
   }
 
   private routes():void {
-    this.app.use(loginRouter);
+    this.app.use('/login', loginRouter);
   }
 
   public start(PORT: string | number):void {
