@@ -1,5 +1,6 @@
 import Team from '../database/models/TeamModel';
 import Match from '../database/models/MatchModel';
+import IMatch from '../interfaces/IMatch';
 
 export default class MatchService {
   static async getMatches(inProgress: string | undefined) {
@@ -12,5 +13,13 @@ export default class MatchService {
     }
 
     return matches;
+  }
+
+  static async insertMatch(match: IMatch) {
+    const matchInserted = await Match.create({
+      ...match, inProgress: true,
+    });
+
+    if (matchInserted) return matchInserted;
   }
 }
