@@ -12,6 +12,7 @@ router.post(
   MatchValidation.validate,
   MatchController.insertMatch,
 );
+router.patch('/:id', MatchController.updateMatch);
 router.patch('/:id/finish', MatchController.finishMatch);
 
 export default router;

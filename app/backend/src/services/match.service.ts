@@ -43,4 +43,13 @@ export default class MatchService {
 
     return 'Finished';
   }
+
+  static async updateMatch(id: number, homeTeamGoals: number, awayTeamGoals: number) {
+    await Match.update({
+      homeTeamGoals,
+      awayTeamGoals,
+    }, { where: { id } });
+
+    return 'Update Successful';
+  }
 }
