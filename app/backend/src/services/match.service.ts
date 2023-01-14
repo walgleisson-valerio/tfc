@@ -1,6 +1,8 @@
 import Team from '../database/models/TeamModel';
 import Match from '../database/models/MatchModel';
 import IMatch from '../interfaces/IMatch';
+import HttpException from '../utils/HttpException.util';
+import TeamService from './team.service';
 
 export default class MatchService {
   static async getMatches(inProgress: string | undefined) {
@@ -15,7 +17,17 @@ export default class MatchService {
     return matches;
   }
 
+  static async validateTeams(homeTeamID: number, awayTeamID: number) {
+    const homeTeam = await TeamService.getTeamById(homeTeamID);
+    const awayTeam = await TeamService.getTeamById(awayTeamID);
+    if (!homeTeam || !awayTeam) {
+      throw new HttpException(404, 'There is no team with such id!');
+    }
+  }
+
   static async insertMatch(match: IMatch) {
+    await this.validateTeams(match.homeTeam, match.awayTeam);
+
     const matchInserted = await Match.create({
       ...match, inProgress: true,
     });
