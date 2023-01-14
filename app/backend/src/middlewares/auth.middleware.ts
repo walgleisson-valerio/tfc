@@ -15,7 +15,7 @@ export default class AuthMiddleware {
 
       req.body.user = userDecoded;
     } catch (e) {
-      throw new HttpException(401, 'Invalid token');
+      throw new HttpException(401, 'Token must be a valid token');
     }
 
     next();
