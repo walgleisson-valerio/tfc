@@ -22,4 +22,13 @@ export default class MatchService {
 
     if (matchInserted) return matchInserted;
   }
+
+  static async finishMatch(id: number) {
+    await Match.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+
+    return 'Finished';
+  }
 }
