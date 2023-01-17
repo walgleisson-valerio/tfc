@@ -12,7 +12,7 @@ export default class TeamStatus {
   goalsBalance: number;
   efficiency:string;
 
-  constructor(teamId: number, name: string, teamHome: IMatch[]) {
+  constructor(teamId: number, name: string, matches: IMatch[]) {
     this.name = name;
     this.totalGames = 0;
     this.totalPoints = 0;
@@ -24,7 +24,7 @@ export default class TeamStatus {
     this.goalsBalance = 0;
     this.efficiency = '0.00';
 
-    this.updateResults(teamId, teamHome);
+    this.updateResults(teamId, matches);
     this.setTotalPoints();
     this.setGoalsBalance();
     this.setEfficiency();
