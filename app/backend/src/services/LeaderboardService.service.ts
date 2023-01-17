@@ -20,23 +20,24 @@ export default class LeaderboardService {
     const teamsInfo = await this.getTeamsInfo();
     let ranking: ITeamStatus[] = [];
     teamsInfo.forEach((team: ITeam) => {
-      const teamStatus = new TeamStatus(team.teamName, team.teamHome);
+      const teamStatus = new TeamStatus(team.id, team.teamName, team.teamHome);
       ranking = [...ranking, { ...teamStatus }];
     });
 
     const orderedRanking = LeaderboardUtils.sortRanking(ranking);
-    // console.log(orderedRanking);
     return orderedRanking;
   }
 
-  // static async getHomeLeaderboard() {
-  //   this.getHomeRanking();
+  static async getAwayLeaderboard() {
+    const teamsInfo = await this.getTeamsInfo();
+    let ranking: ITeamStatus[] = [];
+    teamsInfo.forEach((team: ITeam) => {
+      const teamStatus = new TeamStatus(team.id, team.teamName, team.teamAway);
+      ranking = [...ranking, { ...teamStatus }];
+    });
 
-  //   const matches = await Team.findAll({
-  //     // where: { teamName: 'Santos' },
-  //     include: [{ model: Match, as: 'teamHome' }, { model: Match, as: 'teamAway' }],
-  //   });
-
-  //   return matches;
-  // }
+    const orderedRanking = LeaderboardUtils.sortRanking(ranking);
+    console.log(orderedRanking);
+    return orderedRanking;
+  }
 }

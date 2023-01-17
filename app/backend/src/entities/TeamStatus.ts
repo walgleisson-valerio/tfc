@@ -12,7 +12,7 @@ export default class TeamStatus {
   goalsBalance: number;
   efficiency:string;
 
-  constructor(name: string, teamHome: IMatch[]) {
+  constructor(teamId: number, name: string, teamHome: IMatch[]) {
     this.name = name;
     this.totalGames = 0;
     this.totalPoints = 0;
@@ -24,7 +24,7 @@ export default class TeamStatus {
     this.goalsBalance = 0;
     this.efficiency = '0.00';
 
-    this.updateHomeResults(teamHome);
+    this.updateResults(teamId, teamHome);
     this.setTotalPoints();
     this.setGoalsBalance();
     this.setEfficiency();
@@ -42,16 +42,25 @@ export default class TeamStatus {
     this.efficiency = ((this.totalPoints / (this.totalGames * 3)) * 100).toFixed(2);
   }
 
-  updateHomeResults(matches: IMatch[]): void {
+  updateResults(id:number, matches: IMatch[]): void {
     matches.forEach(async (match: IMatch) => {
-      const { homeTeamGoals, awayTeamGoals, inProgress } = match;
-      if (!inProgress) {
-        this.updateStatus(homeTeamGoals, awayTeamGoals);
+      if (!match.inProgress) {
+        this.updateStatus(id, match);
       }
     });
   }
 
-  updateStatus(homeTeamGoals: number, awayTeamGoals: number) {
+  updateStatus(id: number, match: IMatch) {
+    const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = match;
+    if (id === homeTeam) {
+      this.updateHomeStatus(homeTeamGoals, awayTeamGoals);
+    }
+    if (id === awayTeam) {
+      this.updateAwayStatus(homeTeamGoals, awayTeamGoals);
+    }
+  }
+
+  updateHomeStatus(homeTeamGoals: number, awayTeamGoals: number) {
     this.totalGames += 1;
     if (homeTeamGoals > awayTeamGoals) {
       this.totalVictories += 1;
@@ -65,6 +74,23 @@ export default class TeamStatus {
       this.totalDraws += 1;
       this.goalsFavor += homeTeamGoals;
       this.goalsOwn += awayTeamGoals;
+    }
+  }
+
+  updateAwayStatus(homeTeamGoals: number, awayTeamGoals: number) {
+    this.totalGames += 1;
+    if (homeTeamGoals < awayTeamGoals) {
+      this.totalVictories += 1;
+      this.goalsFavor += awayTeamGoals;
+      this.goalsOwn += homeTeamGoals;
+    } if (homeTeamGoals > awayTeamGoals) {
+      this.totalLosses += 1;
+      this.goalsFavor += awayTeamGoals;
+      this.goalsOwn += homeTeamGoals;
+    } if (homeTeamGoals === awayTeamGoals) {
+      this.totalDraws += 1;
+      this.goalsFavor += awayTeamGoals;
+      this.goalsOwn += homeTeamGoals;
     }
   }
 }
