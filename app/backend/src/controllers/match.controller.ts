@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import IMatch from '../interfaces/IMatch';
+import IMatch from '../entities/interfaces/IMatch';
 import MatchService from '../services/match.service';
 
 export default class MatchController {

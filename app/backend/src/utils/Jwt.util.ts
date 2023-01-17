@@ -1,6 +1,6 @@
 import { sign, verify } from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
-import ILogin from '../interfaces/ILogin';
+import ILogin from '../entities/interfaces/ILogin';
 
 dotenv.config();
 

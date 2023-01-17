@@ -1,5 +1,5 @@
 import { compareSync } from 'bcryptjs';
-import ILogin from '../interfaces/ILogin';
+import ILogin from '../entities/interfaces/ILogin';
 import User from '../database/models/UserModel';
 import Jwt from '../utils/Jwt.util';
 import HttpException from '../utils/HttpException.util';

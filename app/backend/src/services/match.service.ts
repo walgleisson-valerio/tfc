@@ -1,6 +1,6 @@
 import Team from '../database/models/TeamModel';
 import Match from '../database/models/MatchModel';
-import IMatch from '../interfaces/IMatch';
+import IMatch from '../entities/interfaces/IMatch';
 import HttpException from '../utils/HttpException.util';
 import TeamService from './team.service';
 
