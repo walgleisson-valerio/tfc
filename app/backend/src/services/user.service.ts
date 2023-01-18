@@ -6,11 +6,14 @@ import HttpException from '../utils/HttpException.util';
 
 export default class UserService {
   static async login(login: ILogin) {
-    const user = await User.findOne({ where: {
-      email: login.email,
-    } });
+    const user = await User.findOne({
+      // evita de retornar o dataValues
+      raw: true,
+      where: {
+        email: login.email,
+      } });
 
-    if (!user || !compareSync(login.password, user.dataValues.password)) {
+    if (!user || !compareSync(login.password, user.password)) {
       throw new HttpException(401, 'Incorrect email or password');
     }
     const token = Jwt.createToken(login);

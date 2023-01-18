@@ -8,6 +8,7 @@ export default class ErrorMiddleware {
     res: Response,
     _next: NextFunction,
   ) {
+    console.error(error);
     const { status, message } = error as HttpException;
 
     return res.status(status || 500).json({ message } || 'Unknown Error');
