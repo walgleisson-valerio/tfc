@@ -1,6 +1,6 @@
 import IMatch from './IMatch';
 
-export default interface ILogin {
+export default interface ITeam {
   id: number;
   teamName: string;
   teamHome: IMatch[];

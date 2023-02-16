@@ -40,10 +40,9 @@ export default class LeaderboardService {
     return orderedRanking;
   }
 
-  static async getLeaderboard() {
-    const teamsInfo = await this.getTeamsInfo();
+  static setRanking(teams: ITeam[]) {
     let ranking: ITeamStatus[] = [];
-    teamsInfo.forEach((team: ITeam) => {
+    teams.forEach((team: ITeam) => {
       const teamStatus = new TeamStatus(
         team.id,
         team.teamName,
@@ -54,5 +53,23 @@ export default class LeaderboardService {
     const orderedRanking = LeaderboardUtils.sortRanking(ranking);
 
     return orderedRanking;
+  }
+
+  static async getLeaderboard() {
+    const teamsInfo = await this.getTeamsInfo();
+
+    const ranking = this.setRanking(teamsInfo);
+    // let ranking: ITeamStatus[] = [];
+    // teamsInfo.forEach((team: ITeam) => {
+    //   const teamStatus = new TeamStatus(
+    //     team.id,
+    //     team.teamName,
+    //     [...team.teamHome, ...team.teamAway],
+    //   );
+    //   ranking = [...ranking, { ...teamStatus }];
+    // });
+    // const orderedRanking = LeaderboardUtils.sortRanking(ranking);
+
+    return ranking;
   }
 }
